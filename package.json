@@ -1,0 +1,20 @@
+{
+  "name": "session-as-token",
+  "version": "1.0.0",
+  "description": "A module for creating session tokens without user login",
+  "main": "index.ts",
+  "scripts": {
+    "prebuild": "rm -rf ./build",
+    "build": "tsc --build",
+    "prestart": "yarn build",
+    "start": "node ./build/index.js"
+  },
+  "author": "kevinhaube",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.9"
+  }
+}
