@@ -12,10 +12,12 @@ const NOTES = [
     "G",
     "G# / A♭"
 ] as const
+
+// Takes the NOTES array and makes a union type
 type Note = typeof NOTES[number]
-// e.x. MusicalKey of C starts with { key: 1, value: "C" }
 type Scale = Map<number, Note>
 type ScaleType = "major" | "minor"
+
 /** Controls the step pattern of each type of scale
  * To add a new scale, add the type to {@link ScaleType} and the corresponding switch case here */
 const getKeyStep = (keyType: ScaleType): number[] => {
@@ -25,6 +27,7 @@ const getKeyStep = (keyType: ScaleType): number[] => {
         default: throw Error(`Invalid keyType "${keyType}"`)
     }
 }
+
 /** Safely increments noteIndex -- resets when crossing the max index of NOTES */
 const incrementNoteIndex = (index: number, step: number) => {
     const nextIndex = index + step;
@@ -33,6 +36,7 @@ const incrementNoteIndex = (index: number, step: number) => {
         return nextIndex - NOTES.length
     return nextIndex
 }
+
 /** Safely retrieves the index of a note, including cases for flat/sharp notes */
 const getNoteIndex = (note: Note | string): number => {
     if (note.includes("#") || note.includes("♭")) {
@@ -50,6 +54,7 @@ const getNoteIndex = (note: Note | string): number => {
     }
     return NOTES.indexOf(note as Note)
 }
+
 /** Create a key based on inputs
  *
  * @example
@@ -77,4 +82,4 @@ const makeScale = (
 }
 
 export default makeScale
-export type { Note }
+export type { Note, Scale }
