@@ -41,8 +41,8 @@ const ScalesError = (message: string) => {
 
 /** Controls the step pattern of each type of scale
  * To add a new scale, add the type to {@link ScaleType} and the corresponding switch case here */
-const getScaleIntervals = (keyType: ScaleType): number[] => {
-    switch (keyType) {
+const getScaleIntervals = (scaleType: ScaleType): number[] => {
+    switch (scaleType) {
         case "major": return [2, 2, 1, 2, 2, 2, 1]
         case "minor": return [2, 1, 2, 2, 1, 2, 2]
     }
