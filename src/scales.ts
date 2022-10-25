@@ -36,7 +36,7 @@ const isSharpOrFlat = (note: Note | string) => note.includes("#") || note.includ
  *          : ScalesError("Ya 'dun goofed!")
  * } */
 const ScalesError = (message: string) => {
-    throw Error(message)
+    throw Error(`Scales.ts - ${message}`)
 }
 
 /** Controls the step pattern of each type of scale
@@ -45,7 +45,6 @@ const getScaleStepsArray = (keyType: ScaleType): number[] => {
     switch (keyType) {
         case "major": return [2, 2, 1, 2, 2, 2, 1]
         case "minor": return [2, 1, 2, 2, 1, 2, 2]
-        default: return ScalesError(`Invalid keyType "${keyType}"`)
     }
 }
 
@@ -72,8 +71,9 @@ const getSharpOrFlatIndex = (note: string): number => {
 const getNoteIndex = (note: Note | string): number => {
     const normalizedNote = note.trim()
     if (normalizedNote === "" || normalizedNote === "/")
-        return ScalesError(`Invalid note: blank or "/"`)
-    if (!noteDoesExist(note)) return ScalesError(`Note "${note}" not found in NOTES array`)
+        ScalesError(`Invalid note: blank or "/"`)
+    if (!noteDoesExist(note))
+        ScalesError(`Note "${note}" not found in NOTES array`)
     return isSharpOrFlat(note) ? getSharpOrFlatIndex(note) : NOTES.indexOf(note as Note)
 }
 
