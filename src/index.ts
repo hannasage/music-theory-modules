@@ -1,4 +1,4 @@
-import {makeKeyMap} from "./thoery-converter";
+import makeScale from "./scales";
 
-console.log("C Major", makeKeyMap("C"))
-console.log("C# Minor", makeKeyMap("C#", "minor"))
+console.log("C Major", makeScale("C"))
+console.log("C# Minor", makeScale("C#", "minor"))
