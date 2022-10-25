@@ -41,7 +41,7 @@ const ScalesError = (message: string) => {
 
 /** Controls the step pattern of each type of scale
  * To add a new scale, add the type to {@link ScaleType} and the corresponding switch case here */
-const getScaleStepsArray = (keyType: ScaleType): number[] => {
+const getScaleIntervals = (keyType: ScaleType): number[] => {
     switch (keyType) {
         case "major": return [2, 2, 1, 2, 2, 2, 1]
         case "minor": return [2, 1, 2, 2, 1, 2, 2]
@@ -77,18 +77,18 @@ const getNoteIndex = (note: Note | string): number => {
     return isSharpOrFlat(note) ? getSharpOrFlatIndex(note) : NOTES.indexOf(note as Note)
 }
 
-/** Create a key based on inputs
+/** Create a scale based on inputs
  *
  * @example
  * makeKeyMap("C#", "minor") */
 const makeScale = (
     rootNote: Note | string,
-    keyDesignation: ScaleType = "major"
+    scaleType: ScaleType = "major"
 ): Scale | undefined => {
     try {
         let noteIndex = getNoteIndex(rootNote) // Traverses scale by step size from the root note
         let scaleIndex = 1 // Index of note in the returned scale
-        const stepsArray = getScaleStepsArray(keyDesignation);
+        const stepsArray = getScaleIntervals(scaleType);
         const scale: Scale = new Map().set(scaleIndex, rootNote) // Add the root note
         stepsArray.forEach((stepSize) => {
             // Step first
