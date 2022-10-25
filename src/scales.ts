@@ -20,7 +20,7 @@ type ScaleType = "major" | "minor"
 
 /** Controls the step pattern of each type of scale
  * To add a new scale, add the type to {@link ScaleType} and the corresponding switch case here */
-const getKeyStep = (keyType: ScaleType): number[] => {
+const getScaleStepsArray = (keyType: ScaleType): number[] => {
     switch (keyType) {
         case "major": return [2, 2, 1, 2, 2, 2, 1]
         case "minor": return [2, 1, 2, 2, 1, 2, 2]
@@ -66,7 +66,7 @@ const makeScale = (
     try {
         let noteIndex = getNoteIndex(rootNote) // Traverses scale by step size from the root note
         let scaleIndex = 1 // Index of note in the returned scale
-        const stepsArray = getKeyStep(keyDesignation);
+        const stepsArray = getScaleStepsArray(keyDesignation);
         const scale: Scale = new Map().set(scaleIndex, rootNote) // Add the root note
         stepsArray.forEach((stepSize) => {
             // Step first
