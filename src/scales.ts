@@ -80,7 +80,7 @@ const getNoteIndex = (note: Note | string): number => {
 /** Create a scale based on inputs
  *
  * @example
- * makeKeyMap("C#", "minor") */
+ * makeScale("C#", "minor") */
 const makeScale = (
     rootNote: Note | string,
     scaleType: ScaleType = "major"
