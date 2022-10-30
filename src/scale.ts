@@ -2,6 +2,7 @@ import {
     getNotesFromSemitones,
     Note, NoteMap
 } from "./notes";
+import {NumberedMap} from "./tools/numberedMap";
 
 export type ScaleType = "major" | "minor"
 
@@ -25,11 +26,7 @@ export const makeScale = (
     try {
         const scaleSemitones = getScaleSemitones(scaleType);
         const notes = getNotesFromSemitones(root, scaleSemitones)
-        const scale: NoteMap = new Map()
-        notes.forEach((note, index) => {
-            scale.set(index + 1, note)
-        })
-        return scale
+        return NumberedMap(notes)
     } catch (e) {
         console.error(e)
     }

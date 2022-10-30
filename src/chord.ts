@@ -1,4 +1,8 @@
 import {getNotesFromSemitones, Note, NoteMap} from "./notes";
+import {ReturnableError} from "./tools/returnableError";
+import {NumberedMap} from "./tools/numberedMap";
+
+const ChordError = ReturnableError("chord.ts")
 
 type TriadBase = "root" | "third" | "fifth"
 type TriadFifth = "diminished" | "augmented"
@@ -25,6 +29,7 @@ const makeTriadSemitones = (options: TriadOptions): [number, number] => {
 }
 
 const arrangeTriad = (notes: Note[], base: TriadBase | undefined): Note[] => {
+    if (notes.length !== 3) return ChordError(`Cannot arrange a triad containing ${notes.length} notes: limit 3`)
     const [root, third, fifth] = notes;
     switch (base) {
         case "third":
@@ -50,9 +55,5 @@ export const buildTriad = (
     const triadSemitones = makeTriadSemitones(options);
     const notes = getNotesFromSemitones(root, triadSemitones);
     const triad = arrangeTriad(notes, options.base);
-    const triadMap: NoteMap = new Map()
-    triad.forEach((note, index) => {
-        triadMap.set(index + 1, note);
-    })
-    return triadMap
+    return NumberedMap(triad)
 };
