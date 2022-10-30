@@ -17,6 +17,7 @@ export const NOTES = [
 
 // Takes the NOTES array and makes a union type
 export type Note = typeof NOTES[number]
+export type NoteMap = Map<number, Note>
 
 const NoteError = ReturnableError("notes.ts");
 
@@ -38,7 +39,7 @@ const getSharpOrFlatIndex = (note: string): number => {
 }
 
 /** Safely increments noteIndex -- resets when crossing the max index of NOTES */
-export const incrementNoteIndex = (index: number, step: number) => {
+const incrementNoteIndex = (index: number, step: number) => {
     const nextIndex = index + step;
     if (nextIndex >= NOTES.length)
         // Resets the index used to get from the array
@@ -47,11 +48,22 @@ export const incrementNoteIndex = (index: number, step: number) => {
 }
 
 /** Safely retrieves the index of a note, including cases for flat/sharp notes */
-export const getNoteIndex = (note: Note | string): number => {
+const getNoteIndex = (note: Note | string): number => {
     const normalizedNote = note.trim()
     if (normalizedNote === "" || normalizedNote === "/")
         NoteError(`Invalid note: blank or "/"`)
     if (!noteDoesExist(note))
         NoteError(`Note "${note}" not found in NOTES array`)
     return isSharpOrFlat(note) ? getSharpOrFlatIndex(note) : NOTES.indexOf(note as Note)
+}
+
+/** Generate an array of notes from a semitones array and root note */
+export const getNotesFromSemitones = (root: Note | string, semitones: number[]) => {
+    let noteIndex = getNoteIndex(root)
+    const result: Note[] = [NOTES[noteIndex]] // Add the root note
+    semitones.forEach((semitone) => {
+        noteIndex = incrementNoteIndex(noteIndex, semitone) // New note index
+        result.push(NOTES[noteIndex])
+    })
+    return result
 }

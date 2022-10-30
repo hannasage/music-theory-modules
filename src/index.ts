@@ -1,4 +1,5 @@
-import makeScale from "./scale";
+import {makeScale} from "./scale";
+import {buildTriad} from "./chord";
 
 console.log("C Major", makeScale("C"))
-console.log("F# Minor", makeScale("C", "minor"))
+console.log("C Major Triad", buildTriad("C"))
